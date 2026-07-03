@@ -42,4 +42,49 @@ test('dialogueBox', async ({ page }) => {
   await expect(page.getByRole('table').locator('tr').filter({ hasText: 'mdo@gmail.com' })).toHaveCount(0)
 })
 
+test('web tables', async ({ page }) => {
+  await page.getByText('Tables & data').click()
+  await page.getByText('Smart Table').click()
+
+  await page.getByRole('table').locator('tr').filter({ hasText: 'twitter@outlook.com' }).locator('.nb-edit').click()
+  const row3 = page.getByRole('table').locator('tr').filter({ hasText: 'twitter@outlook.com' })
+  await page.locator('input-editor').getByPlaceholder('Age').clear()
+  await page.locator('input-editor').getByPlaceholder('Age').fill('25')
+  await page.locator('.nb-checkmark').click()
+  
+})
+
+test('web tables2', async ({ page }) => {
+  await page.getByText('Tables & data').click()
+  await page.getByText('Smart Table').click()
+  await page.locator('.ng2-smart-pagination').getByText('2').click()
+
+   const targetByRowId  = page.getByRole('row',{name:"11"}).filter({has: page.locator('td').nth(1).getByText('11')})
+   await targetByRowId.locator('.nb-edit').click()
+   await page.locator('input-editor').getByPlaceholder('E-mail').clear()
+   await page.locator('input-editor').getByPlaceholder('E-mail').fill('sam@test.com')
+   await page.locator('.nb-checkmark').click()
+
+  })
+
+  test('testFilterOfTheTable', async ({ page }) => {
+  await page.getByText('Tables & data').click()
+  await page.getByText('Smart Table').click()
+  const ages =["20","30","40","200"]
+  for (const age of ages){
+    await page.locator('input-filter').getByPlaceholder('Age').fill(age)
+    await page.waitForTimeout(1000)
+    const agerows =page.locator('tbody tr')
+
+    for(let row of await agerows.all()){
+      const ageValue = await row.locator('td').last().textContent()
+      console.log(ageValue)
+      if(age !== "200")
+       expect(ageValue).toEqual(age)
+      else
+        expect(page.locator('tbody tr').getByText('No data found')).toBeVisible()
+    }
+  }
+  })
+
 
