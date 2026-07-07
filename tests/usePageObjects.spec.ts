@@ -10,6 +10,13 @@ test.describe('suite1', () =>{
 test('navigate To Form Page', async({page}) =>{
 const navigateTo = new NavigationPage(page);
   await navigateTo.formLayout()
+  await page.waitForTimeout(2000)
+  await navigateTo.datepicker()
+  await page.waitForTimeout(2000)
+  await navigateTo.smartTable()
+  await page.waitForTimeout(2000)
+  await navigateTo.toastrPage()
+  await page.waitForTimeout(2000)
+  await navigateTo.toolTip()
 })
-
 })
