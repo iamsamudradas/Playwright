@@ -73,7 +73,7 @@ test('user facing locator', async({page}) =>{
 
     })
 
-    test.only('extracting values', async({page}) =>{
+    test('extracting values', async({page}) =>{
 
       const basicForm = page.locator('nb-card').filter({hasText:"Basic Form"})
       const buttonText = await basicForm.locator('button').textContent()
