@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { argosScreenshot } from "@argos-ci/playwright";
 
 
 
@@ -10,5 +11,6 @@ test.beforeEach(async({page}) =>{
 
 test('autoWait', async ({page}) =>{
   const successButton = page.locator('.bg-success')
+  await argosScreenshot(page, "homepage");
   await successButton.click()
 })
