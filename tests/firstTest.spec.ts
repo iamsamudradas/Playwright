@@ -11,7 +11,7 @@ await page.goto('/')
 
 
 
-test('navigatetoDatePicker', async ({page}) =>{
+test.only('navigatetoDatePicker', async ({page}) =>{
   
    await page.getByText('DatePicker').click()
 })
