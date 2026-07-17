@@ -2,7 +2,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import type { testOptions } from './test-options';
 
-
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -25,18 +24,7 @@ export default defineConfig<testOptions>({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [
-    // Use "dot" reporter on CI, "list" otherwise (Playwright default).
-    process.env.CI ? ["dot"] : ["list"],
-    // Add Argos reporter.
-    [
-      "@argos-ci/playwright/reporter",
-      createArgosReporterOptions({
-        // Upload to Argos on CI only.
-        uploadToArgos: !!process.env.CI,
-      }),
-    ],
-  ],
+  reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
@@ -44,14 +32,7 @@ export default defineConfig<testOptions>({
      globalsQaURL: 'https://www.globalsqa.com/demo-site/draganddrop/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-     trace: "on-first-retry",
-
-    // Capture screenshot after each test failure.
-    screenshot: "only-on-failure",
-    // Stabilize text rendering so screenshots match across macOS and CI.
-    launchOptions: {
-      args: ["--disable-lcd-text", "--font-render-hinting=none"],
-    },
+    trace: 'on',
   },
 
   /* Configure projects for major browsers */
@@ -109,10 +90,3 @@ export default defineConfig<testOptions>({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-function createArgosReporterOptions(arg0: {
-  // Upload to Argos on CI only.
-  uploadToArgos: boolean;
-}): any | string | import("@playwright/test").BlobReporterOptions | import("@playwright/test").ListReporterOptions | import("@playwright/test").JUnitReporterOptions | import("@playwright/test").JsonReporterOptions | import("@playwright/test").HtmlReporterOptions {
-  throw new Error('Function not implemented.');
-}
-
