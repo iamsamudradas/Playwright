@@ -9,7 +9,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "pageObjects_dev": "npx playwright test firstTest.spec.ts --project=dev"
+    "pageObjects_dev": "npx playwright test AutoTest.spec.ts --project=dev"
   },
   "dependencies": {
     "@angular/animations": "^14.2.12",
